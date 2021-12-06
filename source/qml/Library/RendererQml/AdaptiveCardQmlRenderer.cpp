@@ -1,6 +1,9 @@
 #include "AdaptiveCardQmlRenderer.h"
 #include "ImageDataURI.h"
 #include "pch.h"
+#include "QmlTextType.h"
+#include <iostream>
+#include "TextBlockAdaptiveCard.h"
 
 namespace RendererQml
 {
@@ -532,7 +535,18 @@ namespace RendererQml
 
         uiTextBlock = AddAccessibilityToTextBlock(uiTextBlock, context);
 
-		return uiTextBlock;
+
+        std::shared_ptr<TextBlockAdaptiveCard> uiTextBlock1 = std::make_shared<TextBlockAdaptiveCard>(textBlock, context);
+
+        if (uiTextBlock1->getQmlString()->ToString() != uiTextBlock->ToString()) {
+            std::cout << std::endl << uiTextBlock1->getQmlString()->ToString() << std::endl;
+            std::cout << std::endl << uiTextBlock->ToString() << std::endl;
+        }
+        else {
+            std::cout << std::endl << "TextBlock working fine " << std::endl;
+        }
+
+		return uiTextBlock1->getQmlString();
 
 	}
 
@@ -1571,7 +1585,7 @@ namespace RendererQml
         uiOuterRectangle->Property("border.width", Formatter() << "parent.checked ? 0 : " << toggleButtonConfig.borderWidth);
 
         uiButton->Property("indicator", uiOuterRectangle->ToString());
-
+/* TEST CODE STARTS ORIGINAL */
         auto uiText = std::make_shared<QmlTag>("Text");
         uiText->Property("text", "parent.text");
         uiText->Property("font", "parent.font");
@@ -1588,6 +1602,29 @@ namespace RendererQml
         {
             uiText->Property("elide", "Text.ElideRight");
         }
+
+ 
+        std::shared_ptr<QmlBaseType> uiText1= std::make_shared<QmlTextType>("", std::make_shared<QmlTag>("Text"), "parent.text");
+
+        uiText1->setFont("parent.font");
+        uiText1->setHorizontalAlignment("Text.AlignLeft");
+        uiText1->setVerticalAlignment("Text.AlignVCenter");
+        uiText1->setLeftPadding("parent.indicator.width + parent.spacing");
+        uiText1->setColor(context->GetHexColor(toggleButtonConfig.textColor));
+        if (checkbox.isWrap)
+        {
+            uiText1->setWrapMode(context->GetHexColor("Text.Wrap"));
+        }
+        else
+        {
+            uiText1->setElide("Text.ElideRight");     
+        }
+        
+        if (uiText->ToString() != uiText1->getQmlString()->ToString()) {
+            std::cout << "New Code is Not Working";
+            exit(0);
+        }
+/* TEST CODE ENDS HERE */
 
         uiButton->Property("contentItem", uiText->ToString());
         uiButton->Property("visible", checkbox.isVisible ? "true" : "false");
