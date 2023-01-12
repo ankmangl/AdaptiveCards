@@ -330,11 +330,13 @@ function getMinWidth(childrens){
 
 function getMinWidthActionSet(childrens,spacing){
     var min = 0
-    for(var j =0;j<childrens.length;j++)
-    {
-        min += Math.ceil(childrens[j].implicitWidth)
+    if (childrens.count != 0) {
+        min += Math.ceil(childrens.buttonImplicitWidth)
     }
-    min += ((childrens.length - 1)*spacing)
+    if (childrens.count > 1) { 
+        min += ((childrens.count - 1) * spacing)
+    }
+    console.log("min is : " + min)
     return min
 }
 

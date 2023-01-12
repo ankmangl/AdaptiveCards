@@ -220,9 +220,9 @@ namespace RendererQml
             bodyLayout->Property("onImplicitHeightChanged", Formatter() << "{AdaptiveCardUtils.generateStretchHeight(children," << cardMinHeight << ")}");
         }
 
-		bodyLayout->Property("onImplicitHeightChanged", Formatter() << "{AdaptiveCardUtils.generateStretchHeight(children," << cardMinHeight << ")}");
+		//bodyLayout->Property("onImplicitHeightChanged", Formatter() << "{AdaptiveCardUtils.generateStretchHeight(children," << cardMinHeight << ")}");
 
-		bodyLayout->Property("onImplicitWidthChanged", Formatter() << "{AdaptiveCardUtils.generateStretchHeight(children," << cardMinHeight << ")}");
+		//bodyLayout->Property("onImplicitWidthChanged", Formatter() << "{AdaptiveCardUtils.generateStretchHeight(children," << cardMinHeight << ")}");
 
 		if (card->GetMinHeight() > 0)
 		{
@@ -1515,8 +1515,7 @@ namespace RendererQml
 			outerContainer->Property("visible", "false");
 		}
 
-		outerContainer->Property("property int minWidth", Formatter() << "{ AdaptiveCardUtils.getMinWidthActionSet( children[1].children," << context->GetConfig()->GetActions().buttonSpacing << ")}");
-
+        outerContainer->Property("property int minWidth", Formatter() << "{ AdaptiveCardUtils.getMinWidthActionSet( children[1].children[0]," << context->GetConfig()->GetActions().buttonSpacing << ")}");
 		auto actionsConfig = context->GetConfig()->GetActions();
 		const auto oldActionAlignment = context->GetConfig()->GetActions().actionAlignment;
 

@@ -17,6 +17,7 @@ Repeater {
         height: adaptiveActionRenderId.height
         width: adaptiveActionRenderId.width
         color: 'transparent'
+        property int buttonImplicitWidth: adaptiveActionRenderId.implicitWidth
         Component.onCompleted: {
             _rectangleElements.push(this);
         }
@@ -43,7 +44,7 @@ Repeater {
             _loaderId: actionModel.loaderId
             Component.onCompleted: {
                 adaptiveActionRenderId.handleShowCardToggleVisibility.connect(_setActiveShowCard);
-                _actionElements.push(this);
+                _actionElements.push(this);    
             }
         }
 
